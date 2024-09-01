@@ -7,8 +7,11 @@ import 'package:asset_generator/src/utils/utils.dart';
 
 Future<void> main(List<String> args) async {
   try {
-    var generator = Generator();
-    await generator.generateAsync();
+    var e="daaaaaa";
+        exitWithError('daaaaaaaaaaaaaaaaaaaaaaaaa$e');
+
+   // var generator = Generator();
+   // await generator.generateAsync();
   } on GeneratorException catch (e) {
     exitWithError(e.message);
   } catch (e) {
