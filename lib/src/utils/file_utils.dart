@@ -84,7 +84,7 @@ Future<void> updateArbFile(
 
 /// Gets l10n Dart file path.
 String getL10nDartFilePath(String outputDir) =>
-    path.join(getRootDirectoryPath(), outputDir, 'l10n.dart');
+    path.join(getRootDirectoryPath(), outputDir);
 
 /// Updates l10n Dart file.
 Future<void> updateAssetsDartFile(String content, String outputDir) async {
@@ -100,7 +100,7 @@ Future<void> updateAssetsDartFile(String content, String outputDir) async {
 
 /// Gets intl directory path.
 String getIntlDirectoryPath(String outputDir) =>
-    path.join(getRootDirectoryPath(), outputDir, 'intl');
+    path.join(getRootDirectoryPath(), outputDir);
 
 /// Gets intl directory.
 Directory? getIntlDirectory(String outputDir) {

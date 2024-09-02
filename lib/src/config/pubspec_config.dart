@@ -7,6 +7,7 @@ class ImageGeneratorConfig {
   List<String>? _images;
   List<String>? _icons;
    String? _outputDir;
+  String? _className;
 
 
 
@@ -18,16 +19,14 @@ class ImageGeneratorConfig {
 
     var pubspecFileContent = pubspecFile.readAsStringSync();
     var pubspecYaml = yaml.loadYaml(pubspecFileContent);
-
     if (pubspecYaml is! yaml.YamlMap) {
       throw ConfigException(
           "Failed to extract config from the 'pubspec.yaml' file.\nExpected YAML map but got ${pubspecYaml.runtimeType}.");
     }
 
-    var imageGeneratorConfig = pubspecYaml['image_generator'];
+    var imageGeneratorConfig = pubspecYaml['asset_generator'];
     if (imageGeneratorConfig == null) {
-      return;
-    }
+throw('imageGeneratorConfig error');    }
 
    
     _images = imageGeneratorConfig['images'] is yaml.YamlList
@@ -39,12 +38,16 @@ class ImageGeneratorConfig {
           _outputDir = imageGeneratorConfig['output_dir'] is String
         ? imageGeneratorConfig['output_dir']
         : null;
+            _className = imageGeneratorConfig['class_name'] is String
+        ? imageGeneratorConfig['class_name']
+        : null;
   }
 
   List<String>? get images => _images;
 
   List<String>? get icons => _icons;
  String? get outputDir => _outputDir;
+ String? get className => _className;
 
 
 }

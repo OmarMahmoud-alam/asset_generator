@@ -1,6 +1,6 @@
 library asset_generator;
 
-import 'package:asset_generator/asset_generator.dart';
+import 'package:asset_generator/src/count/count.dart';
 import 'package:asset_generator/src/generator/generator_exception.dart';
 import 'package:asset_generator/src/utils/utils.dart';
 
@@ -8,7 +8,7 @@ import 'package:asset_generator/src/utils/utils.dart';
 Future<void> main(List<String> args) async {
   try {
    
-    var generator = Generator();
+    var generator = CountImage();
     await generator.generateAsync();
   } on GeneratorException catch (e) {
     exitWithError(e.message);
