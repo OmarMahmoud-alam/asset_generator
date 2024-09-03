@@ -29,7 +29,8 @@ class CountImage {
 
   Future<void> _updateNoOfImage() async {
     final projectDir = Directory.current.path;
-    final assetUsageCount = <String, int>{};
+    var assetUsageCount = <String, int>{};
+  final assetNames = await extractAssetNames(_outputDir);
 
     // Recursively find all Dart files in the project directory
     final dartFiles = _findDartFiles(Directory(projectDir));
@@ -38,8 +39,8 @@ class CountImage {
       final content = await File(file).readAsString();
 
       // Search for occurrences of asset paths in the Dart files
-      for (final image in _images ?? []) {
-        final assetName = '$image';
+      for (final image in assetNames) {
+        final assetName = '$_className.$image';
         final regExp = RegExp(r'\b' + RegExp.escape(assetName) + r'\b');
 
         final matches = regExp.allMatches(content).length;
@@ -48,16 +49,7 @@ class CountImage {
         }
       }
 
-      // Also handle icons if needed
-      for (final icon in _icons ?? []) {
-        final assetName = '$_className.$icon';
-        final regExp = RegExp(r'\b' + RegExp.escape(assetName) + r'\b');
-
-        final matches = regExp.allMatches(content).length;
-        if (matches > 0) {
-          assetUsageCount[icon] = (assetUsageCount[icon] ?? 0) + matches;
-        }
-      }
+      
     }
 
     // After counting, update the output file with the number of uses
@@ -82,10 +74,15 @@ class CountImage {
     }
 
     final content = await file.readAsString();
-    final newContent = content.split('\n').map((line) {
+      final contentWithoutOldComments = content.split('\n').map((line) {
+    // Remove comments of the form // Used X times
+    final regExp = RegExp(r'\s*//\s*Used\s*\d+\s*times');
+    return line.replaceAll(regExp, '').trimRight(); // Remove old comments and trailing spaces
+  }).join('\n');
+    final newContent = contentWithoutOldComments.split('\n').map((line) {
       for (final entry in assetUsageCount.entries) {
         if (line.contains(entry.key)) {
-          final newLine = '$line // Used ${entry.value} times';
+          final newLine = '$line // Used ${entry.value-1} times';
           return newLine;
         }
       }
@@ -95,4 +92,18 @@ class CountImage {
     await file.writeAsString(newContent);
     print('Updated asset usage counts.');
   }
+  Future<List<String>> extractAssetNames(String filePath) async {
+  final content = await File(filePath).readAsString();
+
+  // Regular expression to match variable names in the Assets class
+  final regex = RegExp(r'static const String (\w+) =');
+
+  // Find all matches
+  final matches = regex.allMatches(content);
+
+  // Extract the variable names
+  final assetNames = matches.map((match) => match.group(1)!).toList();
+
+  return assetNames;
+}
 }

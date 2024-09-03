@@ -2,7 +2,7 @@ name: asset_generator
 description: A Dart package that generates code for asset paths and pre-caches images, simplifying asset management in Flutter projects.
 homepage: https://github.com/OmarMahmoud-alam/asset_generator.git
 repository: https://github.com/OmarMahmoud-alam/asset_generator.git
-version: 1.1.0
+version: 1.2.0
 # repository: https://github.com/my_org/my_repo
 
 environment:
