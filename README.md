@@ -15,7 +15,7 @@ Add `asset_generator` to your `pubspec.yaml`:
 
 ```yaml
 dev_dependencies:
-  asset_generator: ^1.1.0
+  asset_generator: ^1.3.0
 
 
 
@@ -67,7 +67,6 @@ Future<void> myPrecacheImage(BuildContext context) async {
   ]);
 }
 ```
-
 
 ### Count Variables
 

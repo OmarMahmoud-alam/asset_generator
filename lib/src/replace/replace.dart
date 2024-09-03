@@ -1,12 +1,7 @@
 import 'dart:io';
 import 'package:asset_generator/src/config/pubspec_config.dart';
 import 'package:path/path.dart';
-import 'package:analyzer/dart/analysis/utilities.dart';
-import 'package:analyzer/dart/ast/visitor.dart';
-import 'package:analyzer/dart/ast/ast.dart';
 
-import 'dart:io';
-import 'package:path/path.dart';
  String getRelativePath(String basePath, String targetPath) {
   // Normalize paths
   final base = normalize(basePath);
@@ -19,8 +14,7 @@ import 'package:path/path.dart';
 
 }
 class ReplaceImage {
-  List<String>? _images;
-  List<String>? _icons;
+
   late String _className;
   late String _outputDir;
   final bool _addImport;
@@ -28,8 +22,7 @@ class ReplaceImage {
  ReplaceImage({required bool addImport}) : _addImport = addImport {
     var imageGeneratorConfig = ImageGeneratorConfig(); // Initialize the image generator config
     final defaultOutputDir = join('lib', 'generated', 'generated_images.dart');
-    _images = imageGeneratorConfig.images;
-    _icons = imageGeneratorConfig.icons;
+
     _outputDir = imageGeneratorConfig.outputDir ?? defaultOutputDir;
     _className = imageGeneratorConfig.className ?? 'Assets';
   }
